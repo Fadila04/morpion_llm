@@ -1,7 +1,7 @@
 import requests
 import json
 
-def get_model(grid, active_player, model_name="llama2"):
+def get_model(grid, active_player, model_name="llama3.2:1b"):
     """
     Cette fonction envoie la grille et le joueur actif au modèle Ollama
     et récupère la position du coup que le modèle propose."""
@@ -40,8 +40,8 @@ Do not add any explanation or text, just the JSON.
     try:
         response = requests.post(
             "http://localhost:11434/api/generate",
-            json={"model": model_name, "prompt": prompt, "stream": False},
-            timeout=60
+            json={"model": model_name, "prompt": prompt, "stream": False, "options":{"temperature": 0.5}},
+            timeout=180
         )
         response.raise_for_status()    # Vérifie si l'appel à reussie
     
@@ -49,6 +49,8 @@ Do not add any explanation or text, just the JSON.
         # Lecture de la réponse du modéle
         data = response.json()
         text_output = data.get("response", "").strip()
+
+        print(f"Réponse brute du modèle : {text_output}")
 
         # réponse attendu
         try:

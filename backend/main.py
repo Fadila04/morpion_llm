@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
 from backend.ollama_client import get_model
+from backend.game_logic import check_winner
 
 app = FastAPI()
 
@@ -42,12 +43,19 @@ def play(request: PlayRequest):
         )
     # Appel du modéle ollama pour obtenir le coup
     move= get_model(request.grid, request.active_player, request.model_name)
-
     row, col = move["row"], move["col"]
 
     # Mise à jour de la grille localement
-    new_grid = [row.copy() for row_ in request.grid]
+    new_grid = [row.copy() for row in request.grid]
     new_grid[row][col] = request.active_player
+
+    #  Vérifie si le joueuer à gagné aprés un coup
+    if check_winner(new_grid, request.active_player):
+        return PlayResponse(
+            grid=new_grid,
+            move={"row":row, "col": col},
+            status="win"
+        )
 
     # Renvoie de la réponse sous JSON
     return PlayResponse(
