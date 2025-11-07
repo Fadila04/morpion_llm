@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <title>Duel LLM — Morpion 10x10</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <!-- Style minimal pour la grille et la page -->
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <main class="container">
+    <h1>Duel LLM — Morpion 10x10</h1>
+
+    <!-- Barre de contrôle -->
+    <section class="controls">
+        <label>
+        Modèle Ollama :
+        <input id="modelName" type="text" value="llama3:8b" />
+        </label>
+
+        <label>
+        Joueur actif :
+        <select id="activePlayer">
+            <option value="X">X</option>
+            <option value="O">O</option>
+        </select>
+        </label>
+
+        <button id="btnPlay" class="primary">Jouer (via /play)</button>
+        <button id="btnReset" class="ghost">Réinitialiser</button>
+    </section>
+
+    <!-- Zone d'état (messages, latence, erreurs) -->
+    <section id="status" class="status" aria-live="polite"></section>
+
+    <!-- Grille de jeu -->
+    <section id="boardWrapper" class="board-wrapper">
+        <!-- Les en-têtes A–J et 1–10 + cellules seront générés par script.js -->
+        <table id="board" class="board" aria-label="Grille de morpion 10 par 10"></table>
+    </section>
+
+    <!-- Journal simple (facultatif) -->
+    <section>
+        <h2>Journal</h2>
+        <pre id="log" class="log"></pre>
+    </section>
+    </main>
+
+    <!-- Script applicatif -->
+    <script src="./script.js"></script>
+</body>
+</html>

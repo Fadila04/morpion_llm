@@ -1,0 +1,139 @@
+/* ==========================================================================
+Styles minimalistes pour l'interface morpion 10×10
+========================================================================== */
+
+:root {
+  --bg: #0f172a;         /* Bleu nuit */
+  --fg: #e5e7eb;         /* Texte clair */
+  --muted: #94a3b8;      /* Texte atténué */
+  --primary: #22d3ee;    /* Cyan */
+  --accent: #f472b6;     /* Rose */
+  --cell: #111827;       /* Case */
+  --border: #1f2937;     /* Bordure */
+  --win: #16a34a;        /* Vert victoire */
+  --error: #ef4444;      /* Rouge erreur */
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+margin: 0;
+background: radial-gradient(1200px 800px at 10% 10%, #111827 0%, #030712 40%, #000 100%);
+color: var(--fg);
+font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+
+.container {
+max-width: 960px;
+margin: 40px auto;
+padding: 0 16px 40px;
+}
+
+h1 {
+font-size: 28px;
+margin: 0 0 16px;
+letter-spacing: 0.3px;
+}
+
+h2 {
+font-size: 18px;
+margin: 24px 0 8px;
+color: var(--muted);
+}
+
+.controls {
+display: flex;
+flex-wrap: wrap;
+gap: 12px 16px;
+align-items: center;
+margin-bottom: 16px;
+}
+
+.controls label {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+color: var(--muted);
+font-size: 14px;
+}
+
+input[type="text"], select {
+background: var(--cell);
+border: 1px solid var(--border);
+color: var(--fg);
+padding: 8px 10px;
+border-radius: 8px;
+outline: none;
+}
+
+button {
+border: 1px solid var(--border);
+background: var(--cell);
+color: var(--fg);
+padding: 8px 12px;
+border-radius: 10px;
+cursor: pointer;
+transition: transform .05s ease, border-color .15s ease;
+}
+button:hover { border-color: var(--muted); }
+button:active { transform: translateY(1px); }
+button.primary { border-color: var(--primary); }
+button.ghost { opacity: 0.9; }
+
+.status {
+min-height: 20px;
+font-size: 14px;
+color: var(--muted);
+margin-bottom: 12px;
+}
+
+.board-wrapper { overflow-x: auto; }
+
+.board {
+border-collapse: collapse;
+user-select: none;
+background: rgba(255,255,255,0.02);
+border-radius: 12px;
+overflow: hidden;
+}
+
+/* En-têtes */
+.board th {
+font-weight: 600;
+color: var(--muted);
+padding: 8px 10px;
+text-align: center;
+border: 1px solid var(--border);
+background: rgba(255,255,255,0.02);
+}
+
+/* Cellules du plateau */
+.board td {
+width: 40px;
+height: 40px;
+border: 1px solid var(--border);
+text-align: center;
+vertical-align: middle;
+font-weight: 800;
+font-size: 18px;
+letter-spacing: 0.5px;
+background: var(--cell);
+}
+
+/* Journal */
+.log {
+background: #0b1020;
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: 12px;
+color: #cbd5e1;
+max-height: 260px;
+overflow: auto;
+font-size: 12px;
+}
+
+/* État réussite / erreur dans la barre de statut */
+.status.ok { color: var(--win); }
+.status.err { color: var(--error); }
