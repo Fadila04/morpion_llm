@@ -9,7 +9,7 @@ app = FastAPI()
 # format de données (schéma JSON que le front doit envoyé à l'API)
 class PlayRequest(BaseModel):
     grid: List[List[str]]  # La grille
-    active_player: str  # "X" ou "Y"
+    active_player: str  # "X" ou "O"
     model_name: str  # Le model ollama
 
 # format de réponse JSON
