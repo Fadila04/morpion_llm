@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Morpion 10×10 — LLM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Morpion 10×10 — Duel LLM</h1>
+
+      <section class="controls">
+        <label>API:
+          <input id="apiBase" type="text" value="http://127.0.0.1:8000" />
+        </label>
+        <label>Modèle Ollama:
+          <input id="modelName" type="text" value="llama3.2:1b" />
+        </label>
+        <label>Joueur actif:
+          <select id="activePlayer">
+            <option value="X">X</option>
+            <option value="O">O</option>
+          </select>
+        </label>
+        <button id="btnPlay">Jouer</button>
+        <button id="btnReset">Réinitialiser</button>
+      </section>
+
+      <section id="status" class="status" aria-live="polite"></section>
+
+      <section class="board-wrap">
+        <table id="board" class="board" aria-label="Grille morpion 10 par 10"></table>
+      </section>
+
+      <section>
+        <h2>Journal</h2>
+        <pre id="log" class="log"></pre>
+      </section>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
