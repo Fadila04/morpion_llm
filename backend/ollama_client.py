@@ -11,28 +11,35 @@ def get_model(grid, active_player, model_name="llama3.2:1b"):
 
     # Création du prompt
     prompt = f"""
-You are a Tic-Tac-Toe player. 
-In Tic-Tac-Toe, two players take turns placing their marks (an 'x' for player 'x' and an 'o' for player 'o') 
-on a 10X10 grid. The goal is to get 5 of your marks in a row, either horizontally, vertically, or diagonally. 
-If all spaces on the grid are filled and neither player has achieved three in a row, the game ends in a draw.
+You are a Tic-Tac-Toe expert. 
+Game rules:
+- Two players alternate placing marks: 'X' and 'O'.
+- The board is 10x10 (rows and columns indexed 0..9).
+- The goal is to align 5 of your marks horizontally, vertically, or diagonally.
+- You MUST NOT place a mark on an occupied cell.
+Task:
+Given the current board and the active player, choose the single best move following this priority:
+ 1) If you can win immediately with one move, play that winning move.
+ 2) Else if the opponent can win on their next move, play the blocking move.
+ 3) Else play the most strategic move (center, extend your lines).
 
-Here is the current grid (empty spaces are shown as blanks):
+Input format:
+The board is shown as lines with characters 'X', 'O', or '.' for empty.
 
+Here is the current grid:
 {grid_text}
 
-It is now player '{active_player}'’s turn. 
-Please respond **only** in JSON format like this:
+player: {active_player}
+Respond **only** in JSON format like this:
 {{
   "row": <row_index>,
   "col": <col_index>
 }}
-
 For example:
 {{
   "row": 1,
   "col": 2
 }}
-
 Do not add any explanation or text, just the JSON.
     """
 
@@ -40,7 +47,7 @@ Do not add any explanation or text, just the JSON.
     try:
         response = requests.post(
             "http://localhost:11434/api/generate",
-            json={"model": model_name, "prompt": prompt, "stream": False, "options":{"temperature": 0.5}},
+            json={"model": model_name, "prompt": prompt, "stream": False},
             timeout=180
         )
         response.raise_for_status()    # Vérifie si l'appel à reussie
