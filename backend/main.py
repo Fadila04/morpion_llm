@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
-from backend.ollama_client import get_model
+from backend.ollama_client import get_llm_model
 from backend.game_logic import check_winner
 from backend.schemas import PlayRequest, PlayResponse
 
@@ -32,7 +32,7 @@ def play(request: PlayRequest):
             message="Match nul !"
         )
     # Appel du modéle ollama pour obtenir le coup
-    move= get_model(request.grid, request.active_player, request.model_name)
+    move= get_llm_model(request.grid, request.active_player, request.model_name)
     row_move, col_move = move["row"], move["col"]
 
     # Mise à jour de la grille localement
