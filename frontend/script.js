@@ -52,14 +52,17 @@ function renderBoard(){
   });
 }
 
+
 async function playOnce(){
+  console.log("fonctionne")
   const API = apiBaseEl.value || "http://127.0.0.1:8000";
   const payload = {
     grid,
     active_player: activePlayerEl.value,     // "X" ou "O"
     model_name: modelNameEl.value || "llama3.2:1b"
   };
-
+  console.log(API)
+  console.log(payload)
   setStatus("Requête en cours…");
   try{
     const res = await fetch(`${API}/play`, {

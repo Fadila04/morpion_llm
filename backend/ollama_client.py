@@ -34,8 +34,7 @@ Given the current board and the active player, choose the single best move follo
  3) Else play the most strategic move (center, extend your lines).
 
 Input format:
-The board is shown as lines with characters 'X', 'O', or '.' for empty.
-
+The board is shown as lines with characters 'X', 'O', or " " for empty.
 Here is the current grid:
 {grid_text}
 
