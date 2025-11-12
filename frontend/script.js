@@ -28,7 +28,7 @@ function renderGrid() {
 function playTurn() {
   if (!isPlaying) return;
 
-  playerHTML.textContent = `${activePlayer === "X" ? "Ollama" : "Azure"} réfléchit...`;
+  playerHTML.textContent = `${activePlayer === "X" ? "Ollama" : "Azure"} place sont coup...`;
 
   fetch(urlAPI, {
     method: "POST",

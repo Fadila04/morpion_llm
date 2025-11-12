@@ -23,16 +23,17 @@ def get_llm_model(grid, active_player, model_name="llama3.2:1b"):
     You are a Tic-Tac-Toe expert. 
 Game rules:
 - Two players alternate placing marks: 'X' and 'O'.
-- The board is 10x10 .
+- The board is 10x10 (rows and columns indexed from 0 to 9).
 - The goal is to align 5 of your marks horizontally, vertically, or diagonally.
 - You MUST NOT place a mark on an occupied cell.
 
 Task:
 Given the current board and the active player, choose the single best move following this priority:
- 1) If you can win immediately with one move, play that winning move.
- 2) Else if the opponent can win on their next move, play the blocking move.
- 3) Else play the most strategic move (center, extend your lines).
- 4) verifie si la case est vide avant de jouer sinon repard au num 1
+1. Check if the cell is EMPTY (contains '.')
+2. If you can WIN immediately with one move → play that winning move
+3. Else if opponent can WIN on their next move → BLOCK that move
+4. Else play strategically (center area, extend your lines, create threats)
+5. If your chosen cell is occupied → restart from step 1 with another cell
 
 Input format:
 The board is shown as lines with characters 'X', 'O', or '.' for empty.
