@@ -23,7 +23,7 @@ def get_llm_model(grid, active_player, model_name="llama3.2:1b"):
     You are a Tic-Tac-Toe expert. 
 Game rules:
 - Two players alternate placing marks: 'X' and 'O'.
-- The board is 10x10 (rows and columns indexed 0..9).
+- The board is 10x10 .
 - The goal is to align 5 of your marks horizontally, vertically, or diagonally.
 - You MUST NOT place a mark on an occupied cell.
 
@@ -32,6 +32,7 @@ Given the current board and the active player, choose the single best move follo
  1) If you can win immediately with one move, play that winning move.
  2) Else if the opponent can win on their next move, play the blocking move.
  3) Else play the most strategic move (center, extend your lines).
+ 4) verifie si la case est vide avant de jouer sinon repard au num 1
 
 Input format:
 The board is shown as lines with characters 'X', 'O', or '.' for empty.
@@ -46,6 +47,14 @@ Respond **only** in JSON format like this:
   "row": <row_index>,
   "col": <col_index>
 }}
+
+For example:
+{{
+  "row": 4,
+  "col": 7
+}}
+
+Do not add any explanation or text, just the JSON.
     """
 
     # --- Cas Azure OpenAI ---
@@ -138,6 +147,13 @@ Respond **only** in JSON format like this:
 
 
 
+    
+
+
+
+
+
+    
     
 
 
