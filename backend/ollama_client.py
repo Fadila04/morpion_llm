@@ -12,7 +12,7 @@ OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434/api/generate")
 
 
 def get_llm_model(
-    grid, active_player, model_name="o4-mini"):  # "mixtral", "o4-mini"
+    grid, active_player, model_name="llama3.2:1b"):  # "mixtral", "o4-mini"
     """
     Gère à la fois Ollama (local) et Azure OpenAI pour générer un coup de morpion.
     Retourne un dictionnaire {"row": x, "col": y}.
@@ -87,13 +87,19 @@ Respond **only** in JSON format like this:
     # --- Cas Ollama local ---
     else:
         try:
+            print("send request")
+            print("prompt")
+            print(prompt)
             response = requests.post(
                 OLLAMA_URL,
                 json={"model": model_name, "prompt": prompt, "stream": False},
             )
+            print("reponse reçu")
             response.raise_for_status()
-
+            
             data = response.json()
+            print(data)
+            print("========")
             text_output = data.get("response", "").strip()
             print("Réponse brute Ollama :", text_output)
 
