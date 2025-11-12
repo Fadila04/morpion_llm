@@ -2,8 +2,18 @@ from fastapi import FastAPI
 from backend.ollama_client import get_llm_model
 from backend.game_logic import check_winner
 from backend.schemas import PlayRequest, PlayResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Configuration CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Autorise toutes les origines (tu peux restreindre ensuite)
+    allow_credentials=True,
+    allow_methods=["*"],  # Autorise toutes les méthodes (GET, POST, etc.)
+    allow_headers=["*"],  # Autorise tous les headers (Content-Type, etc.)
+)
 
 #  Route test simple
 @app.get("/")
@@ -14,6 +24,11 @@ def ping():
 # Route principale : fait jouer le modèle reçu
 @app.post("/play")
 def play(request: PlayRequest):
+    print("\n=== Nouvelle requête reçue ===")
+    print("Grille reçue :", request.grid)
+    print("Joueur actif :", request.active_player)
+    print("Modèle :", request.model_name)
+
     """
     Cette route reçoit :
       - la grille actuelle,
@@ -36,7 +51,7 @@ def play(request: PlayRequest):
     move = get_llm_model(grid, active_player, model_name)
     if not move:
         return PlayResponse(grid=grid, move={}, status="error", message="Aucun coup renvoyé par le modèle.")
-
+    print(f'Cout jouer par {active_player} {move}')
     row_move, col_move = move["row"], move["col"]
 
     #  Joue le coup 
@@ -55,6 +70,15 @@ def play(request: PlayRequest):
     # --- Sinon, prépare la suite du tour ---
     next_player = "O" if active_player == "X" else "X"
     next_model = "o4-mini" if model_name != "o4-mini" else "llama3.2:1b"
+
+    # Fait jouer le second modèle
+    move2 = get_llm_model(grid, next_player, next_model)
+    if move2:
+        r2, c2 = move2["row"], move2["col"]
+        if 0 <= r2 < len(grid) and 0 <= c2 < len(grid) and grid[r2][c2] == "":
+            grid[r2][c2] = next_player
+            if check_winner(grid, next_player):
+                return PlayResponse(grid=grid, move={"row": r2, "col": c2}, status="win")
 
     return PlayResponse(
         grid=new_grid,
