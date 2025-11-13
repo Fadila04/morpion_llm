@@ -56,7 +56,6 @@ ouvrir le fichier : frontend/index.html
 
 
 # Technologie utiliser
-
 | Domaine       | Outils                |
 | ------------- | --------------------- |
 | Backend       | FastAPI               |
@@ -71,3 +70,33 @@ Faire un deploiment avec docker sur le serveur Azure
 
 # AUTEUR
 Fadilatou OUMAROU et Emese HOFFMAN
+
+
+# DIAGRAMME CHRONOLOGIQUE
+
+CLICK SUR JOUER
+    |
+    |
+    ↓
+
+Active_player = X(Ollama)
+    |
+    |
+    ↓
+
+Appel API Fast API (Le modéle joue un coup)
+    |
+    |
+    ↓
+
+Backend Renvoie nouvelle grille + état (win, continue, draw)
+    |
+    |
+    ↓
+
+Affichage de grille mise à jour
+    |
+    |
+    ↓
+
+Change de joueuer et relance le tour
