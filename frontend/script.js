@@ -1,3 +1,4 @@
+
 const urlAPI = "http://127.0.0.1:8000/play";
 const gridSize = 10;
 let grid = Array.from({ length: gridSize }, () => Array(gridSize).fill(""));
